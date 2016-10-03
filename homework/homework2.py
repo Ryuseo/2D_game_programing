@@ -25,12 +25,14 @@ def handle_events(): #2013182002 강태규
                 y = y - 10
             elif event.key == SDLK_a:
                 r = r + 10
-                if r > 300:
-                    r = 300
+                #if r > 300:
+                #    r = 300
+                min(r = r + 10, 300)
             elif event.key == SDLK_d:
                 r = r - 10
-                if r < 20:
-                    r = 20
+                #if r < 20:
+                #    r = 20
+                max(r = r - 10, 20)
             elif event.key == SDLK_ESCAPE:
                 running = False
 
