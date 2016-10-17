@@ -17,7 +17,7 @@ map = None
 font = None
 mob_dog = None
 count_pskill = 0
-inputw,inputa,inputs,inputd,input_tab,input_skill,p_atk = False,False,False,False,False, 0, 0
+inputw,inputa,inputs,inputd,input_tab,input_pskill,p_atk = False,False,False,False,False, 0, 0
 
 
 class Map:
@@ -40,13 +40,18 @@ class Player:
         self.frame = 0
         self.dir = 0
         self.jop = 0
+        self.atk = False
         self.image = load_image('tanker.png')
         self.image_t = load_image('target.png')
         self.image_atk = load_image('tanker_atk1.png')
 
     def update(self):
-        global inputw,inputa,inputs,inputd,input_tab,input_skill
+        global inputw,inputa,inputs,inputd,input_tab,input_pskill
         self.frame = (self.frame + 1) % 3
+
+        temp1 = pow(self.x - mob_dog.x, 2)
+        temp2 = pow(self.y - mob_dog.y, 2)
+        temp3 = sqrt(temp1 + temp2)
 
         if inputw == True:
             self.vy = 1
@@ -67,28 +72,33 @@ class Player:
             self.vx = 0
 
         if input_tab == True:
-            temp1 = pow(self.x - mob_dog.x, 2)
-            temp2 = pow(self.y - mob_dog.y, 2)
-            temp3 = sqrt(temp1 + temp2)
             if temp3 < 200:
                 self.tx = mob_dog.x
                 self.ty = mob_dog.y + 32
+
+        if input_pskill == 1:
+            if temp3 < 28:
+                self.atk = True
+                input_pskill = 0
 
         self.x = self.x + self.vx
         self.y = self.y + self.vy
 
     def draw(self):
-        global count_pskill,input_skill
+        global count_pskill, input_pskill
         delay(0.01)
         self.image.clip_draw(self.frame * 32, self.dir * 32, 32, 32, self.x, self.y)
         if self.tx != None:
             self.image_t.draw(self.tx,self.ty)
-        if input_skill == 1:
+
+        if self.atk == True:
             self.image_atk.draw(self.tx,self.ty - 32)
             count_pskill = count_pskill + 1
             if count_pskill == 10:
-                input_skill = 0
                 count_pskill = 0
+                self.atk = False
+        else:
+            self.atk = False
 
 
 
@@ -159,7 +169,7 @@ def resume():
 
 
 def handle_events():
-    global inputw, inputa, inputs, inputd, input_tab,input_skill
+    global inputw, inputa, inputs, inputd, input_tab,input_pskill
 
     events = get_events()
     for event in events:
@@ -179,7 +189,7 @@ def handle_events():
             elif event.key == SDLK_TAB:
                 input_tab = True
             elif event.key == SDLK_1:
-                input_skill = 1
+                input_pskill = 1
 
         elif event.type == SDL_KEYUP:
             if event.key == SDLK_w:
