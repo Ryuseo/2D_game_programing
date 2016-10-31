@@ -239,6 +239,9 @@ class CDealer:
 
 
 class MDealer:
+
+    count = 0
+
     def __init__(self):
         self.x, self.y = 30, 60
         self.vx, self.vy = 0, 0
@@ -247,6 +250,7 @@ class MDealer:
         self.dir = 0
         self.atk = False
         self.atkc = 0
+        self.atkframe = 0
         self.target = None
         self.image = load_image('magic_dealer.png')
         self.image_atk = load_image('fire.png')
@@ -254,7 +258,6 @@ class MDealer:
     def update(self):
         global player, mob_dog
         self.frame = (self.frame + 1) % 3
-
         if player.target != None:
             self.target = player.target
             self.tx = self.target.x
@@ -304,7 +307,13 @@ class MDealer:
         self.image.clip_draw(self.frame * 32, self.dir * 32, 32, 32, self.x, self.y)
 
         if self.atk == True:
-            self.image_atk.clip_draw(self.frame * 32, 0, 32, 32, self.tx, self.ty)
+            self.image_atk.clip_draw(self.atkframe * 32, 0, 32, 32, self.tx, self.ty)
+
+            if MDealer.count < 5:
+                MDealer.count = MDealer.count + 1
+            elif MDealer.count  ==  5:
+                self.atkframe = (self.atkframe + 1) % 5
+                MDealer.count = 0
             self.atkc = self.atkc + 1
             if self.atkc == 10:
                 self.atkc = 0
@@ -450,7 +459,7 @@ def handle_events():
 
 def update():
     player.update()
-    cdealer.update()
+    #cdealer.update()
     mdealer.update()
     mob_dog.update()
     healer.update()
