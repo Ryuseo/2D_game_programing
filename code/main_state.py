@@ -431,30 +431,7 @@ def handle_events():
         if event.type == SDL_QUIT:
             game_framework.quit()
         elif event.type == SDL_KEYDOWN:
-            if event.key == SDLK_ESCAPE:
-                game_framework.change_state(title_state)
-            elif event.key == SDLK_w:
-                inputw = True
-            elif event.key == SDLK_a:
-                inputa = True
-            elif event.key == SDLK_s:
-                inputs = True
-            elif event.key == SDLK_d:
-                inputd = True
-            elif event.key == SDLK_TAB:
-                input_tab = True
-            elif event.key == SDLK_1:
-                input_pskill = 1
-
-        elif event.type == SDL_KEYUP:
-            if event.key == SDLK_w:
-               inputw = False
-            elif event.key == SDLK_a:
-               inputa = False
-            elif event.key == SDLK_s:
-               inputs = False
-            elif event.key == SDLK_d:
-               inputd = False
+            pass
 
 
 def update():
