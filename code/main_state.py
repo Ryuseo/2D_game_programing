@@ -31,19 +31,7 @@ class Map:
     def draw(self):
         self.image.clip_draw(self.left, self.bottom,960, 640, self.x, self.y)
     def update(self):
-        if inputw == True:
-            if self.bottom < 320:
-                self.bottom = self.bottom + 1
-        elif inputs == True:
-            if self.bottom > 0:
-                self.bottom = self.bottom - 1
-
-        if inputd == True:
-            if self.left < 0:
-                self.left = self.left + 1
-        elif inputa == True:
-            if self.left > 0:
-                self.left = self.left - 1
+        pass
 
 
 class Player:
