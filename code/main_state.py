@@ -70,6 +70,19 @@ def collide_unit(a, b):
                 if a.y - 16 < b.y + 16:
                     a.x -= (a.xdir)
                     a.y -= (a.ydir)
+def mob_dead():
+    global dog
+    if dog.hp < 0:
+        if tanker.target == dog:
+            tanker.target == None
+            tanker.atk == False
+        if cdealer.target == dog:
+            cdealer.target == None
+            cdealer.atk == False
+        if mdealer.target == dog:
+            mdealer.target == None
+            mdealer.atk == False
+        del(dog)
 
 def handle_events(frame_time):
     events = get_events()
@@ -103,6 +116,7 @@ def handle_events(frame_time):
                     target.input_h(event, tanker)
                     target.input_h(event, cdealer)
                     target.input_h(event, mdealer)
+                    target.input_h(event, healer)
 
 def update(frame_time):
     map.update()
@@ -137,6 +151,8 @@ def update(frame_time):
     collide_unit(dog, healer)
     collide_unit(dog, tanker)
 
+    #mob_dead()
+
 def draw(frame_time):
     clear_canvas()
 
@@ -146,6 +162,13 @@ def draw(frame_time):
     mdealer.draw()
     healer.draw()
     dog.draw()
+
+    tanker.draw_atk()
+    cdealer.draw_atk()
+    mdealer.draw_atk()
+    healer.draw_atk()
+    dog.draw_atk()
+
     target.draw()
 
     update_canvas()

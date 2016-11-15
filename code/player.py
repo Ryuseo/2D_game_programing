@@ -20,6 +20,8 @@ class Tanker:
     BACK_STAND, RIGHT_STAND, LEFT_STAND, FRONT_STAND = 0, 1, 2, 3
 
     def __init__(self):
+        self.hp = 150
+        self.mhp = 150
         self.x, self.y = 90.0, 250.0
         self.px, self.py = 90.0, 250.0
         self.vx, self.vy = 0,0
@@ -67,15 +69,21 @@ class Tanker:
 
     def draw(self):
         self.image.clip_draw(self.frame * 32, self.state * 32, 32, 32, self.x, self.y)
+
+    def draw_atk(self):
         if self.atk == True:
             self.image_atk.draw(self.target.x,self.target.y)
+            self.atking()
 
 
     def getpos(self,event):
+        self.atk = False
         self.px = event.x
         self.py = 640 - event.y
         self.target = None
-        self.atk == False
+
+    def atking(self):
+        self.target.hp -= 5;
 
 class CDealer:
     PIXEL_PER_METER = (32.0 / 2)           # 10 pixel 30 cm
@@ -94,6 +102,8 @@ class CDealer:
     BACK_STAND, RIGHT_STAND, LEFT_STAND, FRONT_STAND = 0, 1, 2, 3
 
     def __init__(self):
+        self.hp = 100
+        self.mhp = 100
         self.x, self.y = 50.0, 250.0
         self.px, self.py = 50.0, 250.0
         self.vx, self.vy = 0, 0
@@ -141,14 +151,20 @@ class CDealer:
 
     def draw(self):
         self.image.clip_draw(self.frame * 32, self.state * 32, 32, 32, self.x, self.y)
+
+    def draw_atk(self):
         if self.atk == True:
             self.image_atk.draw(self.target.x, self.target.y)
+            self.atking()
 
     def getpos(self,event):
         self.px = event.x
         self.py = 640 - event.y
         self.target = None
-        self.atk == False
+        self.atk = False
+
+    def atking(self):
+        self.target.hp -= 10;
 
 class MDealer:
     PIXEL_PER_METER = (32.0 / 2)           # 10 pixel 30 cm
@@ -167,6 +183,8 @@ class MDealer:
     BACK_STAND, RIGHT_STAND, LEFT_STAND, FRONT_STAND = 0, 1, 2, 3
 
     def __init__(self):
+        self.hp = 80
+        self.mhp = 80
         self.x, self.y = 90.0, 200.0
         self.px, self.py = 90.0, 200.0
         self.vx, self.vy = 0, 0
@@ -213,13 +231,19 @@ class MDealer:
 
     def draw(self):
         self.image.clip_draw(self.frame * 32, self.state * 32, 32, 32, self.x, self.y)
+
+    def draw_atk(self):
         if self.atk == True:
             self.image_atk.draw(self.target.x, self.target.y)
+            self.atking()
     def getpos(self,event):
         self.px = event.x
         self.py = 640 - event.y
         self.target = None
-        self.atk == False
+        self.atk = False
+
+    def atking(self):
+        self.target.hp -= 10;
 
 class Healer:
     PIXEL_PER_METER = (32.0 / 2)           # 10 pixel 30 cm
@@ -238,6 +262,8 @@ class Healer:
     BACK_STAND, RIGHT_STAND, LEFT_STAND, FRONT_STAND = 0, 1, 2, 3
 
     def __init__(self):
+        self.hp = 80
+        self.mhp = 80
         self.x, self.y = 50.0, 200.0
         self.px, self.py = 50.0, 200.0
         self.vx, self.vy = 0, 0
@@ -261,9 +287,9 @@ class Healer:
             temp = sqrt(pow(tempx, 2) + pow(tempy, 2))
             self.xdir = tempx / temp
             self.ydir = tempy / temp
-            if temp < 200 and self.target != None and time.clock() - self.cooldown > 3:
-                self.atk = True
-                self.cooldown = time.clock()
+        if sqrt(pow(self.px - self.x, 2) + pow(self.py - self.y, 2)) < 200 and self.target != None and time.clock() - self.cooldown > 3:
+            self.atk = True
+            self.cooldown = time.clock()
         if time.clock() - self.cooldown > 0.5:
             self.atk = False
         distance = Healer.RUN_SPEED_PPS * frame_time
@@ -284,11 +310,19 @@ class Healer:
 
     def draw(self):
         self.image.clip_draw(self.frame * 32, self.state * 32, 32, 32, self.x, self.y)
+
+    def draw_atk(self):
         if self.atk == True:
             self.image_atk.clip_draw( self.frame * 32, 0, 32, 32, self.target.x, self.target.y)
+            self.atking()
 
     def getpos(self,event):
         self.px = event.x
         self.py = 640 - event.y
         self.target = None
-        self.atk == False
+        self.atk = False
+
+    def atking(self):
+        self.target.hp += 10
+        if self.target.mhp < self.target.hp:
+             self.target.hp = self.target.mhp

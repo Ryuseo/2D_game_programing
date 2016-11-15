@@ -8,7 +8,7 @@ class Map:
     LEFT_RUN, RIGHT_RUN, LEFT_STAND, RIGHT_STAND = 0, 1, 2, 3
 
     def __init__(self):
-        self.x, self.y = 480, 480
+        self.x, self.y = 480, 1600
         self.vx, self.vy = 0,0
         self.state = self.RIGHT_STAND
         if Map.image == None:

@@ -21,6 +21,7 @@ class Dog:
     BACK_STAND, RIGHT_STAND, LEFT_STAND, FRONT_STAND = 0, 1, 2, 3
 
     def __init__(self):
+        self.hp = 100
         self.x, self.y = 500.0, 500.0
         self.px, self.py = 500.0, 500.0
         self.vx, self.vy = 0, 0
@@ -34,7 +35,7 @@ class Dog:
         if Dog.image == None:
             Dog.image = load_image('dog.png')
         if Dog.image_atk == None:
-            Dog.image_atk = load_image('dog.png')
+            Dog.image_atk = load_image('tanker_atk1.png')
 
 
     def update(self, frame_time,tanker,cdealer,mdealer,healer):
@@ -55,20 +56,27 @@ class Dog:
         self.xdir = self.xdir * distance
         self.ydir = self.ydir * distance
         if self.target != None and sqrt(pow(self.px - self.x, 2) + pow(self.py - self.y, 2)) < 50:
-            self.ydir = 0
-            self.xdir = 0
+                self.ydir = 0
+                self.xdir = 0
         self.x += self.xdir + self.vx
         self.y += self.ydir + self.vy
         if self.target != None:
             self.px = self.target.x
             self.py = self.target.y
 
+
         self.px += self.vx
         self.py += self.vy
-        self.serch(tanker,cdealer,mdealer,healer)
+        if self.target == None:
+            self.serch(tanker,cdealer,mdealer,healer)
 
     def draw(self):
         self.image.clip_draw(self.frame * 32, self.state * 32, 32, 32, self.x, self.y)
+
+    def draw_atk(self):
+        if self.atk == True:
+            self.image_atk.draw(self.target.x,self.target.y)
+            self.atking()
 
     def getpos(self,event):
         self.px = event.x
@@ -95,3 +103,6 @@ class Dog:
         temp = sqrt(pow(tempx, 2) + pow(tempy, 2))
         if temp < 200:
             self.target = healer
+
+    def atking(self):
+        self.target.hp -= 10
