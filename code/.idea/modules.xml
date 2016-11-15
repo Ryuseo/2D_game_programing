@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/../../../../2016-2DGP/Labs/Lab07 - Character Controller/.idea/Lab07 - Character Controller.iml" filepath="$PROJECT_DIR$/../../../../2016-2DGP/Labs/Lab07 - Character Controller/.idea/Lab07 - Character Controller.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/code.iml" filepath="$PROJECT_DIR$/.idea/code.iml" />
     </modules>
   </component>
