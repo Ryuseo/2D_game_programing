@@ -22,15 +22,15 @@ class Dog:
 
     def __init__(self):
         self.hp = 100
-        self.x, self.y = 500.0, 500.0
-        self.px, self.py = 500.0, 500.0
-        self.vx, self.vy = 0, 0
+        self.x, self.y = 500.0, 500.0 #현재위치
+        self.px, self.py = 500.0, 500.0 #목표지점
+        self.vx, self.vy = 0, 0 #x,y축 이동방향
         self.total_frames = 0.0;
-        self.target = None
+        self.target = None #목표물
         self.frame = 0
-        self.cooldown = time.clock()
-        self.atk = False
-        self.xdir, self.ydir = 0.0, 0.0
+        self.cooldown = time.clock() #재사용시간 마지막으로 사용한 시간
+        self.atk = False #공격가능 여부
+        self.xdir, self.ydir = 0.0, 0.0 #이동방향
         self.state = self.FRONT_STAND
         if Dog.image == None:
             Dog.image = load_image('dog.png')
@@ -78,7 +78,7 @@ class Dog:
             self.image_atk.draw(self.target.x,self.target.y)
             self.atking()
 
-    def getpos(self,event):
+    def getpos(self,event): #목적지 갱신
         self.px = event.x
         self.py = 640 - event.y
 

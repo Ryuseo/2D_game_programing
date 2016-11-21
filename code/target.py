@@ -9,8 +9,8 @@ class Target:
     LEFT_RUN, RIGHT_RUN, LEFT_STAND, RIGHT_STAND = 0, 1, 2, 3
 
     def __init__(self):
-        self.x, self.y = 0, 0
-        self.select = None
+        self.x, self.y = 0, 0 #선택대상의 좌표
+        self.select = None #선택 대상
         if Target.image == None:
             Target.image = load_image('target.png')
 
