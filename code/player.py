@@ -24,7 +24,7 @@ class Tanker:
         self.mhp = 150
         self.x, self.y = 90.0, 250.0
         self.px, self.py = 90.0, 250.0
-        self.vx, self.vy = 0,0
+        self.view_move_x, self.view_move_y = 0,0
         self.total_frames = 0.0;
         self.frame = 0
         self.cooldown = time.clock()
@@ -58,14 +58,14 @@ class Tanker:
         if self.target != None and sqrt(pow(self.px - self.x, 2) + pow(self.py - self.y, 2)) < 50:
                 self.ydir = 0
                 self.xdir = 0
-        self.x += self.xdir + self.vx
-        self.y += self.ydir + self.vy
+        self.x += self.xdir + self.view_move_x
+        self.y += self.ydir + self.view_move_y
         if self.target != None:
             self.px = self.target.x
             self.py = self.target.y
 
-        self.px += self.vx
-        self.py += self.vy
+        self.px += self.view_move_x
+        self.py += self.view_move_y
 
     def draw(self):
         self.image.clip_draw(self.frame * 32, self.state * 32, 32, 32, self.x, self.y)
@@ -106,7 +106,7 @@ class CDealer:
         self.mhp = 100
         self.x, self.y = 50.0, 250.0
         self.px, self.py = 50.0, 250.0
-        self.vx, self.vy = 0, 0
+        self.view_move_x, self.view_move_y = 0, 0
         self.total_frames = 0.0;
         self.frame = 0
         self.cooldown = time.clock()
@@ -140,14 +140,14 @@ class CDealer:
         if self.target != None and sqrt(pow(self.px - self.x, 2) + pow(self.py - self.y, 2)) < 50:
             self.ydir = 0
             self.xdir = 0
-        self.x += self.xdir + self.vx
-        self.y += self.ydir + self.vy
+        self.x += self.xdir + self.view_move_x
+        self.y += self.ydir + self.view_move_y
         if self.target != None:
             self.px = self.target.x
             self.py = self.target.y
 
-        self.px += self.vx
-        self.py += self.vy
+        self.px += self.view_move_x
+        self.py += self.view_move_y
 
     def draw(self):
         self.image.clip_draw(self.frame * 32, self.state * 32, 32, 32, self.x, self.y)
@@ -187,7 +187,7 @@ class MDealer:
         self.mhp = 80
         self.x, self.y = 90.0, 200.0
         self.px, self.py = 90.0, 200.0
-        self.vx, self.vy = 0, 0
+        self.view_move_x, self.view_move_y = 0, 0
         self.total_frames = 0.0;
         self.frame = 0
         self.cooldown = time.clock()
@@ -221,13 +221,13 @@ class MDealer:
         if self.target != None and sqrt(pow(self.px - self.x, 2) + pow(self.py - self.y, 2)) < 200:
             self.ydir = 0
             self.xdir = 0
-        self.x += self.xdir + self.vx
-        self.y += self.ydir + self.vy
+        self.x += self.xdir + self.view_move_x
+        self.y += self.ydir + self.view_move_y
         if self.target != None:
             self.px = self.target.x
             self.py = self.target.y
-        self.px += self.vx
-        self.py += self.vy
+        self.px += self.view_move_x
+        self.py += self.view_move_y
 
     def draw(self):
         self.image.clip_draw(self.frame * 32, self.state * 32, 32, 32, self.x, self.y)
@@ -266,7 +266,7 @@ class Healer:
         self.mhp = 80
         self.x, self.y = 50.0, 200.0
         self.px, self.py = 50.0, 200.0
-        self.vx, self.vy = 0, 0
+        self.view_move_x, self.view_move_y = 0, 0
         self.total_frames = 0.0;
         self.frame = 0
         self.cooldown = time.clock()
@@ -300,13 +300,13 @@ class Healer:
         if self.target != None and sqrt(pow(self.px - self.x, 2) + pow(self.py - self.y, 2)) < 200:
                 self.ydir = 0
                 self.xdir = 0
-        self.x += self.xdir + self.vx
-        self.y += self.ydir + self.vy
+        self.x += self.xdir + self.view_move_x
+        self.y += self.ydir + self.view_move_y
         if self.target != None:
             self.px = self.target.x
             self.py = self.target.y
-        self.px += self.vx
-        self.py += self.vy
+        self.px += self.view_move_x
+        self.py += self.view_move_y
 
     def draw(self):
         self.image.clip_draw(self.frame * 32, self.state * 32, 32, 32, self.x, self.y)
