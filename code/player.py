@@ -23,7 +23,7 @@ class Tanker:
         self.hp = 150
         self.mhp = 150
         self.x, self.y = 90.0, 250.0
-        self.px, self.py = 90.0, 250.0
+        self.pos_x, self.pos_y = 90.0, 250.0
         self.view_move_x, self.view_move_y = 0,0
         self.total_frames = 0.0;
         self.frame = 0
@@ -39,12 +39,12 @@ class Tanker:
 
 
     def update(self, frame_time):
-        if(self.px != self.x and self.py != self.y):
-            tempx = self.px - self.x
-            tempy = self.py - self.y
-            temp = sqrt(pow(tempx, 2) + pow(tempy, 2))
-            self.xdir = tempx / temp
-            self.ydir = tempy / temp
+        if(self.pos_x != self.x and self.pos_y != self.y):
+            tempos_x = self.pos_x - self.x
+            tempos_y = self.pos_y - self.y
+            temp = sqrt(pow(tempos_x, 2) + pow(tempos_y, 2))
+            self.xdir = tempos_x / temp
+            self.ydir = tempos_y / temp
             if temp < 50 and self.target != None and time.clock() - self.cooldown > 3:
                 self.atk = True
                 self.cooldown = time.clock()
@@ -55,17 +55,17 @@ class Tanker:
         self.frame = int(self.total_frames) % 3
         self.xdir = self.xdir * distance
         self.ydir = self.ydir * distance
-        if self.target != None and sqrt(pow(self.px - self.x, 2) + pow(self.py - self.y, 2)) < 50:
+        if self.target != None and sqrt(pow(self.pos_x - self.x, 2) + pow(self.pos_y - self.y, 2)) < 50:
                 self.ydir = 0
                 self.xdir = 0
         self.x += self.xdir + self.view_move_x
         self.y += self.ydir + self.view_move_y
         if self.target != None:
-            self.px = self.target.x
-            self.py = self.target.y
+            self.pos_x = self.target.x
+            self.pos_y = self.target.y
 
-        self.px += self.view_move_x
-        self.py += self.view_move_y
+        self.pos_x += self.view_move_x
+        self.pos_y += self.view_move_y
 
     def draw(self):
         self.image.clip_draw(self.frame * 32, self.state * 32, 32, 32, self.x, self.y)
@@ -78,8 +78,8 @@ class Tanker:
 
     def getpos(self,event):
         self.atk = False
-        self.px = event.x
-        self.py = 640 - event.y
+        self.pos_x = event.x
+        self.pos_y = 640 - event.y
         self.target = None
 
     def atking(self):
@@ -105,7 +105,7 @@ class CDealer:
         self.hp = 100
         self.mhp = 100
         self.x, self.y = 50.0, 250.0
-        self.px, self.py = 50.0, 250.0
+        self.pos_x, self.pos_y = 50.0, 250.0
         self.view_move_x, self.view_move_y = 0, 0
         self.total_frames = 0.0;
         self.frame = 0
@@ -121,12 +121,12 @@ class CDealer:
 
 
     def update(self, frame_time):
-        if (self.px != self.x and self.py != self.y):
-            tempx = self.px - self.x
-            tempy = self.py - self.y
-            temp = sqrt(pow(tempx, 2) + pow(tempy, 2))
-            self.xdir = tempx / temp
-            self.ydir = tempy / temp
+        if (self.pos_x != self.x and self.pos_y != self.y):
+            tempos_x = self.pos_x - self.x
+            tempos_y = self.pos_y - self.y
+            temp = sqrt(pow(tempos_x, 2) + pow(tempos_y, 2))
+            self.xdir = tempos_x / temp
+            self.ydir = tempos_y / temp
             if temp < 50 and self.target != None and time.clock() - self.cooldown > 3:
                 self.atk = True
                 self.cooldown = time.clock()
@@ -137,17 +137,17 @@ class CDealer:
         self.frame = int(self.total_frames) % 3
         self.xdir = self.xdir * distance
         self.ydir = self.ydir * distance
-        if self.target != None and sqrt(pow(self.px - self.x, 2) + pow(self.py - self.y, 2)) < 50:
+        if self.target != None and sqrt(pow(self.pos_x - self.x, 2) + pow(self.pos_y - self.y, 2)) < 50:
             self.ydir = 0
             self.xdir = 0
         self.x += self.xdir + self.view_move_x
         self.y += self.ydir + self.view_move_y
         if self.target != None:
-            self.px = self.target.x
-            self.py = self.target.y
+            self.pos_x = self.target.x
+            self.pos_y = self.target.y
 
-        self.px += self.view_move_x
-        self.py += self.view_move_y
+        self.pos_x += self.view_move_x
+        self.pos_y += self.view_move_y
 
     def draw(self):
         self.image.clip_draw(self.frame * 32, self.state * 32, 32, 32, self.x, self.y)
@@ -158,8 +158,8 @@ class CDealer:
             self.atking()
 
     def getpos(self,event):
-        self.px = event.x
-        self.py = 640 - event.y
+        self.pos_x = event.x
+        self.pos_y = 640 - event.y
         self.target = None
         self.atk = False
 
@@ -186,7 +186,7 @@ class MDealer:
         self.hp = 80
         self.mhp = 80
         self.x, self.y = 90.0, 200.0
-        self.px, self.py = 90.0, 200.0
+        self.pos_x, self.pos_y = 90.0, 200.0
         self.view_move_x, self.view_move_y = 0, 0
         self.total_frames = 0.0;
         self.frame = 0
@@ -202,12 +202,12 @@ class MDealer:
 
 
     def update(self, frame_time):
-        if(self.px != self.x and self.py != self.y):
-            tempx = self.px - self.x
-            tempy = self.py - self.y
-            temp = sqrt(pow(tempx, 2) + pow(tempy, 2))
-            self.xdir = tempx / temp
-            self.ydir = tempy / temp
+        if(self.pos_x != self.x and self.pos_y != self.y):
+            tempos_x = self.pos_x - self.x
+            tempos_y = self.pos_y - self.y
+            temp = sqrt(pow(tempos_x, 2) + pow(tempos_y, 2))
+            self.xdir = tempos_x / temp
+            self.ydir = tempos_y / temp
             if temp < 200 and self.target != None and time.clock() - self.cooldown > 3:
                 self.atk = True
                 self.cooldown = time.clock()
@@ -218,16 +218,16 @@ class MDealer:
         self.frame = int(self.total_frames) % 3
         self.xdir = self.xdir * distance
         self.ydir = self.ydir * distance
-        if self.target != None and sqrt(pow(self.px - self.x, 2) + pow(self.py - self.y, 2)) < 200:
+        if self.target != None and sqrt(pow(self.pos_x - self.x, 2) + pow(self.pos_y - self.y, 2)) < 200:
             self.ydir = 0
             self.xdir = 0
         self.x += self.xdir + self.view_move_x
         self.y += self.ydir + self.view_move_y
         if self.target != None:
-            self.px = self.target.x
-            self.py = self.target.y
-        self.px += self.view_move_x
-        self.py += self.view_move_y
+            self.pos_x = self.target.x
+            self.pos_y = self.target.y
+        self.pos_x += self.view_move_x
+        self.pos_y += self.view_move_y
 
     def draw(self):
         self.image.clip_draw(self.frame * 32, self.state * 32, 32, 32, self.x, self.y)
@@ -237,8 +237,8 @@ class MDealer:
             self.image_atk.draw(self.target.x, self.target.y)
             self.atking()
     def getpos(self,event):
-        self.px = event.x
-        self.py = 640 - event.y
+        self.pos_x = event.x
+        self.pos_y = 640 - event.y
         self.target = None
         self.atk = False
 
@@ -265,7 +265,7 @@ class Healer:
         self.hp = 80
         self.mhp = 80
         self.x, self.y = 50.0, 200.0
-        self.px, self.py = 50.0, 200.0
+        self.pos_x, self.pos_y = 50.0, 200.0
         self.view_move_x, self.view_move_y = 0, 0
         self.total_frames = 0.0;
         self.frame = 0
@@ -281,13 +281,13 @@ class Healer:
 
 
     def update(self, frame_time):
-        if(self.px != self.x and self.py != self.y):
-            tempx = self.px - self.x
-            tempy = self.py - self.y
-            temp = sqrt(pow(tempx, 2) + pow(tempy, 2))
-            self.xdir = tempx / temp
-            self.ydir = tempy / temp
-        if sqrt(pow(self.px - self.x, 2) + pow(self.py - self.y, 2)) < 200 and self.target != None and time.clock() - self.cooldown > 3:
+        if(self.pos_x != self.x and self.pos_y != self.y):
+            tempos_x = self.pos_x - self.x
+            tempos_y = self.pos_y - self.y
+            temp = sqrt(pow(tempos_x, 2) + pow(tempos_y, 2))
+            self.xdir = tempos_x / temp
+            self.ydir = tempos_y / temp
+        if sqrt(pow(self.pos_x - self.x, 2) + pow(self.pos_y - self.y, 2)) < 200 and self.target != None and time.clock() - self.cooldown > 3:
             self.atk = True
             self.cooldown = time.clock()
         if time.clock() - self.cooldown > 0.5:
@@ -297,16 +297,16 @@ class Healer:
         self.frame = int(self.total_frames) % 3
         self.xdir = self.xdir * distance
         self.ydir = self.ydir * distance
-        if self.target != None and sqrt(pow(self.px - self.x, 2) + pow(self.py - self.y, 2)) < 200:
+        if self.target != None and sqrt(pow(self.pos_x - self.x, 2) + pow(self.pos_y - self.y, 2)) < 200:
                 self.ydir = 0
                 self.xdir = 0
         self.x += self.xdir + self.view_move_x
         self.y += self.ydir + self.view_move_y
         if self.target != None:
-            self.px = self.target.x
-            self.py = self.target.y
-        self.px += self.view_move_x
-        self.py += self.view_move_y
+            self.pos_x = self.target.x
+            self.pos_y = self.target.y
+        self.pos_x += self.view_move_x
+        self.pos_y += self.view_move_y
 
     def draw(self):
         self.image.clip_draw(self.frame * 32, self.state * 32, 32, 32, self.x, self.y)
@@ -317,8 +317,8 @@ class Healer:
             self.atking()
 
     def getpos(self,event):
-        self.px = event.x
-        self.py = 640 - event.y
+        self.pos_x = event.x
+        self.pos_y = 640 - event.y
         self.target = None
         self.atk = False
 
