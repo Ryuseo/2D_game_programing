@@ -22,8 +22,8 @@ class Tanker:
     def __init__(self):
         self.hp = 150
         self.mhp = 150
-        self.x, self.y = 90.0, 250.0
-        self.pos_x, self.pos_y = 90.0, 250.0
+        self.x, self.y = 480.0, 250.0
+        self.pos_x, self.pos_y = 480.0, 250.0
         self.view_move_x, self.view_move_y = 0,0
         self.total_frames = 0.0;
         self.frame = 0
@@ -46,8 +46,9 @@ class Tanker:
             self.xdir = tempos_x / temp
             self.ydir = tempos_y / temp
             if temp < 50 and self.target != None and time.clock() - self.cooldown > 3:
-                self.atk = True
                 self.cooldown = time.clock()
+                self.atk = True
+                self.atking()
         if time.clock() - self.cooldown > 0.5:
             self.atk = False
         distance = Tanker.RUN_SPEED_PPS * frame_time
@@ -73,7 +74,7 @@ class Tanker:
     def draw_atk(self):
         if self.atk == True:
             self.image_atk.draw(self.target.x,self.target.y)
-            self.atking()
+
 
 
     def getpos(self,event):
@@ -104,8 +105,8 @@ class CDealer:
     def __init__(self):
         self.hp = 100
         self.mhp = 100
-        self.x, self.y = 50.0, 250.0
-        self.pos_x, self.pos_y = 50.0, 250.0
+        self.x, self.y = 430.0, 200.0
+        self.pos_x, self.pos_y = 430.0, 250.0
         self.view_move_x, self.view_move_y = 0, 0
         self.total_frames = 0.0;
         self.frame = 0
@@ -130,6 +131,7 @@ class CDealer:
             if temp < 50 and self.target != None and time.clock() - self.cooldown > 3:
                 self.atk = True
                 self.cooldown = time.clock()
+                self.atking()
         if time.clock() - self.cooldown > 0.5:
             self.atk = False
         distance = Tanker.RUN_SPEED_PPS * frame_time
@@ -155,7 +157,6 @@ class CDealer:
     def draw_atk(self):
         if self.atk == True:
             self.image_atk.draw(self.target.x, self.target.y)
-            self.atking()
 
     def getpos(self,event):
         self.pos_x = event.x
@@ -185,8 +186,8 @@ class MDealer:
     def __init__(self):
         self.hp = 80
         self.mhp = 80
-        self.x, self.y = 90.0, 200.0
-        self.pos_x, self.pos_y = 90.0, 200.0
+        self.x, self.y = 530.0, 200.0
+        self.pos_x, self.pos_y = 530.0, 200.0
         self.view_move_x, self.view_move_y = 0, 0
         self.total_frames = 0.0;
         self.frame = 0
@@ -211,6 +212,7 @@ class MDealer:
             if temp < 200 and self.target != None and time.clock() - self.cooldown > 3:
                 self.atk = True
                 self.cooldown = time.clock()
+                self.atking()
         if time.clock() - self.cooldown > 0.5:
             self.atk = False
         distance = MDealer.RUN_SPEED_PPS * frame_time
@@ -235,7 +237,7 @@ class MDealer:
     def draw_atk(self):
         if self.atk == True:
             self.image_atk.draw(self.target.x, self.target.y)
-            self.atking()
+
     def getpos(self,event):
         self.pos_x = event.x
         self.pos_y = 640 - event.y
@@ -264,8 +266,8 @@ class Healer:
     def __init__(self):
         self.hp = 80
         self.mhp = 80
-        self.x, self.y = 50.0, 200.0
-        self.pos_x, self.pos_y = 50.0, 200.0
+        self.x, self.y = 480.0, 200.0
+        self.pos_x, self.pos_y = 480.0, 200.0
         self.view_move_x, self.view_move_y = 0, 0
         self.total_frames = 0.0;
         self.frame = 0
@@ -290,6 +292,7 @@ class Healer:
         if sqrt(pow(self.pos_x - self.x, 2) + pow(self.pos_y - self.y, 2)) < 200 and self.target != None and time.clock() - self.cooldown > 3:
             self.atk = True
             self.cooldown = time.clock()
+            self.atking()
         if time.clock() - self.cooldown > 0.5:
             self.atk = False
         distance = Healer.RUN_SPEED_PPS * frame_time
@@ -314,7 +317,6 @@ class Healer:
     def draw_atk(self):
         if self.atk == True:
             self.image_atk.clip_draw( self.frame * 32, 0, 32, 32, self.target.x, self.target.y)
-            self.atking()
 
     def getpos(self,event):
         self.pos_x = event.x

@@ -20,10 +20,20 @@ class Dog:
 
     BACK_STAND, RIGHT_STAND, LEFT_STAND, FRONT_STAND = 0, 1, 2, 3
 
-    def __init__(self):
-        self.hp = 100
-        self.x, self.y = 500.0, 500.0 #현재위치
-        self.px, self.py = 500.0, 500.0 #목표지점
+    def __init__(self,i):
+        self.hp = 50
+        if(i < 3):
+            self.x, self.y = 480 , 500.0 + (i * 300) #현재위치
+            self.px, self.py = 480 , 500.0 + (i * 300)  # 목표지점
+        elif (i == 3 or i == 4):
+            self.x, self.y = 380 + ((i - 3) * 200), 1568.0  # 현재위치
+            self.px, self.py  = 380 + ((i - 3) * 200), 1568.0  # 목표지점
+        elif i < 9:
+            self.x, self.y = 480, 500.0 + ((i) * 300)  # 현재위치
+            self.px, self.py = 480, 500.0 + ((i) * 300)  # 목표지점
+        else:
+            self.x, self.y = 380 + ((i - 9) * 200), 3052.0  # 현재위치
+            self.px, self.py = 380 + ((i - 9) * 200), 3052.0  # 목표지점
         self.vx, self.vy = 0, 0 #x,y축 이동방향
         self.total_frames = 0.0;
         self.target = None #목표물
@@ -38,7 +48,7 @@ class Dog:
             Dog.image_atk = load_image('tanker_atk1.png')
 
 
-    def update(self, frame_time,tanker,cdealer,mdealer,healer):
+    def update(self, frame_time,tankers,cdealers,mdealers,healers):
         if (self.px != self.x and self.py != self.y):
             tempx = self.px - self.x
             tempy = self.py - self.y
@@ -47,6 +57,7 @@ class Dog:
             self.ydir = tempy / temp
             if temp < 50 and self.target != None and time.clock() - self.cooldown > 3:
                 self.atk = True
+                self.atking()
                 self.cooldown = time.clock()
         if time.clock() - self.cooldown > 0.5:
             self.atk = False
@@ -68,7 +79,7 @@ class Dog:
         self.px += self.vx
         self.py += self.vy
         if self.target == None:
-            self.serch(tanker,cdealer,mdealer,healer)
+            self.serch(tankers,cdealers,mdealers,healers)
 
     def draw(self):
         self.image.clip_draw(self.frame * 32, self.state * 32, 32, 32, self.x, self.y)
@@ -76,33 +87,36 @@ class Dog:
     def draw_atk(self):
         if self.atk == True:
             self.image_atk.draw(self.target.x,self.target.y)
-            self.atking()
 
     def getpos(self,event): #목적지 갱신
         self.px = event.x
         self.py = 640 - event.y
 
-    def serch(self,tanker,cdealer,mdealer,healer):
-        tempx = tanker.x - self.x
-        tempy = tanker.y - self.y
-        temp = sqrt(pow(tempx, 2) + pow(tempy, 2))
-        if temp < 200:
-            self.target = tanker
-        tempx = cdealer.x - self.x
-        tempy = cdealer.y - self.y
-        temp = sqrt(pow(tempx, 2) + pow(tempy, 2))
-        if temp < 200:
-            self.target = cdealer
-        tempx = mdealer.x - self.x
-        tempy = mdealer.y - self.y
-        temp = sqrt(pow(tempx, 2) + pow(tempy, 2))
-        if temp < 200:
-            self.target = mdealer
-        tempx = healer.x - self.x
-        tempy = healer.y - self.y
-        temp = sqrt(pow(tempx, 2) + pow(tempy, 2))
-        if temp < 200:
-            self.target = healer
+    def serch(self,tankers,cdealers,mdealers,healers):
+        for tanker in tankers:
+            tempx = tanker.x - self.x
+            tempy = tanker.y - self.y
+            temp = sqrt(pow(tempx, 2) + pow(tempy, 2))
+            if temp < 200:
+                self.target = tanker
+        for cdealer in cdealers:
+            tempx = cdealer.x - self.x
+            tempy = cdealer.y - self.y
+            temp = sqrt(pow(tempx, 2) + pow(tempy, 2))
+            if temp < 200:
+                self.target = cdealer
+        for mdealer in mdealers:
+            tempx = mdealer.x - self.x
+            tempy = mdealer.y - self.y
+            temp = sqrt(pow(tempx, 2) + pow(tempy, 2))
+            if temp < 200:
+                self.target = mdealer
+        for healer in healers:
+            tempx = healer.x - self.x
+            tempy = healer.y - self.y
+            temp = sqrt(pow(tempx, 2) + pow(tempy, 2))
+            if temp < 200:
+                self.target = healer
 
     def atking(self):
         self.target.hp -= 10
